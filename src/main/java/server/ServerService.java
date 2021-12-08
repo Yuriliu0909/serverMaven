@@ -20,7 +20,6 @@ public class ServerService extends Service<ServerUI> {
             @Override
             protected ServerUI call() throws Exception {
                 new ThreadedServer(s);
-                System.out.println("YURI");
                 return s;
             }
         };

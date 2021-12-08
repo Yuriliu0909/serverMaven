@@ -1,20 +1,11 @@
 package server;
 
 import GUI.ServerUI;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
 
-
-/**
-     * A TCP server that runs on port 9090.  When a client connects, it
-     * sends the client the current date and time, then closes the
-     * connection with that client.  Arguably just about the simplest
-     * server you can write.
-     */
-    public class ThreadedServer {
+public class ThreadedServer {
     static ServerUI s;
     public int port = 8080;
     public ServerSocket serverSocket = new ServerSocket(port);
@@ -27,12 +18,12 @@ import java.util.HashMap;
             //server will be running infinitely until closed
             while(!serverSocket.isClosed()){
                 Socket socket = serverSocket.accept();
-                //clientConnections.put(socket.getInetAddress().getHostAddress(), socket);
+//                clientConnections.put(socket.getInetAddress().getHostAddress(), socket);
 //                new ServerThread(socket).start();
 //                serverSocket.close();
                 System.out.println("A new client has connected");
-                Client.ClientHandler clientHandler = new Client.ClientHandler(socket);
-                Thread thread = new Thread(clientHandler);
+                ServerThread serverThread = new ServerThread(socket);
+                Thread thread = new Thread(serverThread);
                 thread.start();
             }
         }catch(IOException e){
