@@ -45,7 +45,4 @@ public class ServerUI extends Application {
         Application.launch(args);
     }
 
-    public void setText() {
-
-    }
 }

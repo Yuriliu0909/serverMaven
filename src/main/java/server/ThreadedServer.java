@@ -16,20 +16,39 @@ import java.util.HashMap;
      */
     public class ThreadedServer {
     static ServerUI s;
+    public int port = 8080;
+    public ServerSocket serverSocket = new ServerSocket(port);
     //HashMap<String, Socket> clientConnections = new HashMap<>();
 
     public ThreadedServer(ServerUI s) throws IOException {
-            int port = 9090;
-            ServerSocket listener = new ServerSocket(port);
             System.out.println("Server started on"+port);
             //accept
-            while(true) {
-                Socket socket = listener.accept();
+        try{
+            //server will be running infinitely until closed
+            while(!serverSocket.isClosed()){
+                Socket socket = serverSocket.accept();
                 //clientConnections.put(socket.getInetAddress().getHostAddress(), socket);
-                new ServerThread(socket).start();
-                listener.close();
+//                new ServerThread(socket).start();
+//                serverSocket.close();
+                System.out.println("A new client has connected");
+                Client.ClientHandler clientHandler = new Client.ClientHandler(socket);
+                Thread thread = new Thread(clientHandler);
+                thread.start();
             }
+        }catch(IOException e){
+            closeServerSocket();
         }
+        }
+
+    public void closeServerSocket(){
+        try{
+            if(serverSocket != null) {
+                serverSocket.close();
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
         /**
          * Runs the server.
@@ -37,4 +56,6 @@ import java.util.HashMap;
         public static void main(String[] args) throws IOException {
             new ThreadedServer(s);
         }
+
 }
+
