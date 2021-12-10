@@ -12,8 +12,8 @@ import javafx.stage.Stage;
 import server.ServerService;
 
 public class ServerUI extends Application {
-    public TextArea textArea = new TextArea();
-    public TextField port = new TextField();
+    private TextArea textArea = new TextArea();
+    private TextField port = new TextField();
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -38,14 +38,15 @@ public class ServerUI extends Application {
 
 
         //Defining the Clear button
-        Button clear = new Button("close");
-        GridPane.setConstraints(clear, 1, 1);
+        Button close = new Button("close");
+        GridPane.setConstraints(close, 1, 1);
 
 
-        hbox.getChildren().addAll(textArea,port,start,clear);
+        hbox.getChildren().addAll(textArea,port,start,close);
     }
 
     public static void main(String[] args) {
+
         Application.launch(args);
     }
 

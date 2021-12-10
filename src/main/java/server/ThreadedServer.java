@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ThreadedServer {
-    private TextField tf_port;
+    private TextField tfPort;
     private TextArea textArea;
     private int port;
     //list to add all clients to the thread
@@ -19,11 +19,11 @@ public class ThreadedServer {
 
     public ThreadedServer(TextArea textArea, TextField tf_port) {
         this.textArea = textArea;
-        this.tf_port = tf_port;
+        this.tfPort = tf_port;
     }
 
     public void listen() throws IOException {
-        port = Integer.parseInt(tf_port.getText());
+        port = Integer.parseInt(tfPort.getText());
         System.out.println("port number " + port);
         ServerSocket listener = new ServerSocket(port);
         textArea.appendText("The server started on " + port);
@@ -31,6 +31,7 @@ public class ThreadedServer {
         while (true) {
             Socket socket = listener.accept();
             textArea.appendText("Client: "+ socket+"\n");
+            //start thread for multipal clients
             new ServerThread(socket, textArea).start();
         }
     }
@@ -40,6 +41,7 @@ public class ThreadedServer {
     }
 
     public static Socket getSocket(String username) {
+
         return sockets.get(username);
     }
 }

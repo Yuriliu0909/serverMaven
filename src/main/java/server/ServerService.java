@@ -9,8 +9,8 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class ServerService extends Service<ServerUI> {
-    public TextArea textArea;
-    public TextField port;
+    private TextArea textArea;
+    private TextField port;
 
     public ServerService(TextArea textArea, TextField port) {
         this.textArea = textArea;
@@ -24,6 +24,7 @@ public class ServerService extends Service<ServerUI> {
         return new Task<>() {
             @Override
             protected ServerUI call() throws IOException {
+                //start server
                 ThreadedServer server=new ThreadedServer(textArea, port);
                 server.listen();
                 return null;
