@@ -1,15 +1,19 @@
 package GUI;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import server.ServerService;
 
 public class ServerUI extends Application {
-    static ServerUI s;
+    public TextArea textArea = new TextArea();
+    public TextField port = new TextField();
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -27,18 +31,18 @@ public class ServerUI extends Application {
         GridPane.setConstraints(start, 1, 0);
         start.setOnAction(value ->  {
             System.out.println("Server started");
-            ServerService ss = new ServerService(s);
+            ServerService ss = new ServerService(textArea,port);
             //need to start the serverservice
             ss.start();
         });
 
 
         //Defining the Clear button
-        Button clear = new Button("Clear");
+        Button clear = new Button("close");
         GridPane.setConstraints(clear, 1, 1);
 
 
-        hbox.getChildren().addAll(start,clear);
+        hbox.getChildren().addAll(textArea,port,start,clear);
     }
 
     public static void main(String[] args) {
